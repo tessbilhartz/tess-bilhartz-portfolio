@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333333;
+  font-size: 0.95rem;
+}
+
+nav ul li a:hover {
+  opacity: 0.6;
+}
