@@ -4,7 +4,7 @@
   --hover: #777;
   --bg: #fff;
   --column: 864px;
-  --font: "Helvetica Neue", Helvetica, Arial, sans-serif; /* placeholder: swap for the site's real font */
+ --font: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; /* stand-in for Alliance No. 2 */
 }
 * { box-sizing: border-box; }
 html { background: var(--bg); }
