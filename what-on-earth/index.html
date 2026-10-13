@@ -12,37 +12,122 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-
   <style>
-    /* Vertical images: keep the whole image on screen (change 80vh to taste) */
-    main figure.single img {
-      width: auto;
-      max-width: 100%;
-      max-height: 80vh;
-      height: auto;
-    }
-    /* Two-up images: show uncropped */
-    main figure.wide img {
-      aspect-ratio: auto;
-      object-fit: fill;
-    }
+    main figure.single img { width: auto; max-width: 100%; max-height: 80vh; height: auto; }
+    main figure.wide img { aspect-ratio: auto; object-fit: fill; }
     main figure img { cursor: zoom-in; }
-
-    /* Zoom viewer */
-    .zl {
-      position: fixed; inset: 0; z-index: 2000;
-      display: flex;
-      overflow: auto;
-      overscroll-behavior: contain;
-      background: rgba(255, 255, 255, 0.98);
-    }
+    .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
     .zl[hidden] { display: none; }
-    .zl img {
-      display: block; flex: none; margin: auto;
-      width: auto; height: auto;
-      max-width: calc(100vw - 48px);
-      max-height: calc(100vh - 48px);
-      cursor: zoom-in;
-      user-select: none; -webkit-user-drag: none;
-    }
-    .zl.zl-zoomed img {
+    .zl img { display: block; flex: none; margin: auto; width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); cursor: zoom-in; }
+    .zl.zoomed img { max-width: none; max-height: none; cursor: zoom-out; }
+    .zl button { position: fixed; z-index: 2001; background: none; border: 0; padding: 8px 14px; font-size: 34px; line-height: 1; color: #000; cursor: pointer; }
+    .zl-close { top: 8px; right: 12px; }
+    .zl-prev, .zl-next { top: 50%; transform: translateY(-50%); }
+    .zl-prev { left: 8px; }
+    .zl-next { right: 8px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="../">Tess Bilhartz</a>
+    <nav class="site-nav">
+      <a href="../exhibitions/">Exhibitions</a>
+      <a href="../about-1/">Press</a>
+      <a href="../cv/">About</a>
+      <a href="../contact/">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <figure class="single">
+      <figcaption>Installation shots from <em>What On Earth</em> at Below Grand Gallery, October 2020</figcaption>
+      <img src="../images/WhatOnEarth.01.jpg" alt="Installation view of What On Earth, with drawings on the walls and two floor lamps">
+    </figure>
+    <figure class="single">
+      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail">
+    </figure>
+    <figure class="single">
+      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face">
+      <figcaption>Colored pencil on paper, 25 x 27 inches</figcaption>
+    </figure>
+    <figure class="wide">
+      <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile">
+    </figure>
+    <figure class="wide">
+      <img src="../images/WhatOnEarth.05.jpg" alt="Two drawings side by side: a dark curved form and a portrait">
+    </figure>
+    <figure class="single">
+      <img src="../images/WhatOnEarth.06.jpg" alt="Colored pencil drawing of a seascape">
+      <figcaption>Colored pencil on paper, 25 x 25 inches</figcaption>
+    </figure>
+    <figure class="single">
+      <img src="../images/WhatOnEarth.07.jpg" alt="Colored pencil drawing of a face above a rocky shoreline">
+    </figure>
+    <figure class="single">
+      <img src="../images/WhatOnEarth.08.jpg" alt="Exterior view of the installation in a storefront window">
+    </figure>
+  </main>
+
+  <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
+
+  <div class="zl" id="zl" hidden>
+    <button class="zl-close" id="zl-close" aria-label="Close">&times;</button>
+    <button class="zl-prev" id="zl-prev" aria-label="Previous image">&#8249;</button>
+    <button class="zl-next" id="zl-next" aria-label="Next image">&#8250;</button>
+    <img id="zl-img" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var thumbs = document.querySelectorAll('main figure img');
+      var box = document.getElementById('zl');
+      var big = document.getElementById('zl-img');
+      var n = thumbs.length, idx = 0;
+
+      function load(i) {
+        idx = (i + n) % n;
+        big.src = thumbs[idx].src;
+        big.alt = thumbs[idx].alt;
+        box.classList.remove('zoomed');
+        big.style.width = '';
+        box.scrollTop = 0;
+        box.scrollLeft = 0;
+      }
+      function open(i) { load(i); box.hidden = false; document.body.style.overflow = 'hidden'; }
+      function close() { box.hidden = true; document.body.style.overflow = ''; }
+
+      for (var i = 0; i < n; i++) {
+        (function (k) { thumbs[k].addEventListener('click', function () { open(k); }); })(i);
+      }
+
+      big.addEventListener('click', function (e) {
+        if (box.classList.contains('zoomed')) {
+          box.classList.remove('zoomed');
+          big.style.width = '';
+          return;
+        }
+        var r = big.getBoundingClientRect();
+        var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+        var w = box.clientWidth * 2;
+        box.classList.add('zoomed');
+        big.style.width = w + 'px';
+        box.scrollLeft = fx * w - e.clientX;
+        box.scrollTop = fy * big.offsetHeight - e.clientY;
+      });
+
+      box.addEventListener('click', function (e) {
+        if (e.target === box && !box.classList.contains('zoomed')) close();
+      });
+      document.getElementById('zl-close').addEventListener('click', close);
+      document.getElementById('zl-prev').addEventListener('click', function () { load(idx - 1); });
+      document.getElementById('zl-next').addEventListener('click', function () { load(idx + 1); });
+      document.addEventListener('keydown', function (e) {
+        if (box.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') load(idx + 1);
+        if (e.key === 'ArrowLeft') load(idx - 1);
+      });
+    })();
+  </script>
+</body>
+</html>
