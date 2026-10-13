@@ -4,7 +4,7 @@
   --hover: #777;
   --bg: #fff;
   --column: 864px;
- --font: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; /* stand-in for Alliance No. 2 */
+  --font: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; /* stand-in for Alliance No. 2 */
 }
 * { box-sizing: border-box; }
 html { background: var(--bg); }
@@ -37,6 +37,7 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
   color: var(--menu);
 }
+.site-nav a { transition: color 0.4s ease 0s; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--hover); }
 
 main { width: min(var(--column), 100% - 32px); margin: 53px auto 0; }
@@ -45,12 +46,20 @@ figure img { display: block; width: 100%; height: auto; }
 figure.wide img { aspect-ratio: 960 / 660; object-fit: cover; }
 figcaption { margin-top: 3px; }
 
-.site-footer { width: min(var(--column), 100% - 32px); margin: 60px auto 24px; font-size: 12px; }
+.exhibit { margin: 0 0 40px; }
+.exhibit a { display: block; width: 40%; }
+.exhibit.portrait a { width: 34.4%; }
+.exhibit img { display: block; width: 100%; height: auto; object-fit: cover; }
+.exhibit .caption { display: block; margin-top: 3px; }
+
+.site-footer { margin-top: 110px; border-top: 1px solid #888; padding: 12px max(16px, calc((100% - var(--column)) / 2 + 9px)) 24px; font-size: 12px; color: #333; }
 
 @media (max-width: 760px) {
   .wordmark { font-size: 20px; }
   .site-nav { font-size: 13px; letter-spacing: 0.02em; margin-left: 16px; padding-right: 0; }
   main { margin-top: 32px; }
+  .exhibit a { width: 70%; }
+  .exhibit.portrait a { width: 60%; }
 }
 @media (max-width: 480px) {
   .site-header { flex-direction: column; align-items: flex-start; height: auto; padding: 16px 0 8px; gap: 12px; }
