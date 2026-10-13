@@ -14,52 +14,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* Single images: shrink so the whole image fits on screen (change 80vh to taste) */
-    main figure:not(.wide) img {
-      width: auto !important;
-      height: auto !important;
-      aspect-ratio: auto !important;
-      max-width: 84.7%;
+    /* Vertical images: keep the whole image on screen (change 80vh to taste) */
+    main figure.single img {
+      width: auto;
+      max-width: 100%;
       max-height: 80vh;
+      height: auto;
     }
-    main figure.wide img { height: auto !important; aspect-ratio: auto !important; }
+    /* Two-up images: show uncropped */
+    main figure.wide img {
+      aspect-ratio: auto;
+      object-fit: fill;
+    }
+    main figure img { cursor: zoom-in; }
 
-    /* Click-to-zoom */
-    main img { cursor: zoom-in; }
-    .lightbox {
-      position: fixed; inset: 0; z-index: 1000;
-      background: #fff; overflow: auto;
-      display: none;
+    /* Zoom viewer */
+    .zl {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex;
+      overflow: auto;
+      overscroll-behavior: contain;
+      background: rgba(255, 255, 255, 0.98);
     }
-    .lightbox.open { display: block; }
-    .lightbox img {
-      display: block; margin: 0 auto;
-      width: 100vw; height: 100vh; object-fit: contain;
+    .zl[hidden] { display: none; }
+    .zl img {
+      display: block; flex: none; margin: auto;
+      width: auto; height: auto;
+      max-width: calc(100vw - 48px);
+      max-height: calc(100vh - 48px);
       cursor: zoom-in;
+      user-select: none; -webkit-user-drag: none;
     }
-    .lightbox.zoomed img {
-      width: auto; height: auto; max-width: none;
-      object-fit: none; cursor: zoom-out;
-    }
-    .lightbox .close {
-      position: fixed; top: 16px; right: 22px; z-index: 1001;
-      font: inherit; font-size: 32px; line-height: 1;
-      background: none; border: 0; cursor: pointer; color: #000;
-    }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <a class="wordmark" href="../">Tess Bilhartz</a>
-    <nav class="site-nav">
-      <a href="../exhibitions/">Exhibitions</a>
-      <a href="../about-1/">Press</a>
-      <a href="../cv/">About</a>
-      <a href="../contact/">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <figure>
-      <figcaption>Installation shots from <em>What On Earth</em> at Below Grand Gallery, October 2020</figcaption>
-      <img
+    .zl.zl-zoomed img {
