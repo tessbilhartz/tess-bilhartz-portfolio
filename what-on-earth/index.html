@@ -12,6 +12,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* Single images: shrink so the whole image fits on screen (change 80vh to taste) */
+    main figure:not(.wide) img {
+      width: auto !important;
+      height: auto !important;
+      aspect-ratio: auto !important;
+      max-width: 84.7%;
+      max-height: 80vh;
+    }
+    main figure.wide img { height: auto !important; aspect-ratio: auto !important; }
+
+    /* Click-to-zoom */
+    main img { cursor: zoom-in; }
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: #fff; overflow: auto;
+      display: none;
+    }
+    .lightbox.open { display: block; }
+    .lightbox img {
+      display: block; margin: 0 auto;
+      width: 100vw; height: 100vh; object-fit: contain;
+      cursor: zoom-in;
+    }
+    .lightbox.zoomed img {
+      width: auto; height: auto; max-width: none;
+      object-fit: none; cursor: zoom-out;
+    }
+    .lightbox .close {
+      position: fixed; top: 16px; right: 22px; z-index: 1001;
+      font: inherit; font-size: 32px; line-height: 1;
+      background: none; border: 0; cursor: pointer; color: #000;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -27,40 +62,4 @@
   <main>
     <figure>
       <figcaption>Installation shots from <em>What On Earth</em> at Below Grand Gallery, October 2020</figcaption>
-      <img src="../images/WhatOnEarth.01.jpg" alt="Installation view of What On Earth, with drawings on the walls and two floor lamps" style="width:84.7%;height:auto;aspect-ratio:auto">
-    </figure>
-
-    <figure>
-      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail" style="width:84.7%;height:auto;aspect-ratio:auto">
-    </figure>
-
-    <figure>
-      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face" style="width:84.7%;height:auto;aspect-ratio:auto">
-      <figcaption>Colored pencil on paper, 25 x 27 inches</figcaption>
-    </figure>
-
-    <figure class="wide">
-      <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile" style="height:auto;aspect-ratio:auto">
-    </figure>
-
-    <figure class="wide">
-      <img src="../images/WhatOnEarth.05.jpg" alt="Two drawings side by side: a dark curved form and a portrait" style="height:auto;aspect-ratio:auto">
-    </figure>
-
-    <figure>
-      <img src="../images/WhatOnEarth.06.jpg" alt="Colored pencil drawing of a seascape" style="width:84.7%;height:auto;aspect-ratio:auto">
-      <figcaption>Colored pencil on paper, 25 x 25 inches</figcaption>
-    </figure>
-
-    <figure>
-      <img src="../images/WhatOnEarth.07.jpg" alt="Colored pencil drawing of a face above a rocky shoreline" style="width:84.7%;height:auto;aspect-ratio:auto">
-    </figure>
-
-    <figure>
-      <img src="../images/WhatOnEarth.08.jpg" alt="Exterior view of the installation in a storefront window, with drawings on the walls and two floor lamps" style="width:84.7%;height:auto;aspect-ratio:auto">
-    </figure>
-  </main>
-
-  <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
-</body>
-</html>
+      <img
