@@ -14,17 +14,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <style>
     /* ONE place to control sizes: width as a share of the page column */
-    :root { --portrait-w: 60%; --landscape-w: 75%; }
+    :root { --portrait-w: 60%; --landscape-w: 80%; --top-gap: 40px; }
 
+    /* Each figure is a centered box; the image fills it and the caption lines up with its left edge */
+    main figure { width: var(--portrait-w); margin: 0 auto 40px; }
+    main figure.is-landscape { width: var(--landscape-w); }
     main figure img {
       display: block;
-      width: var(--portrait-w);
+      width: 100%;
       height: auto;
       aspect-ratio: auto;
       object-fit: contain;
       cursor: zoom-in;
     }
-    main figure img.is-landscape { width: var(--landscape-w); }
+    /* Space between the opening text and the first image */
+    main figure:first-child figcaption { margin: 0 0 var(--top-gap); }
 
     /* Zoom viewer */
     .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
@@ -61,10 +65,10 @@
       <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face">
       <figcaption>Colored pencil on paper, 25 x 27 inches</figcaption>
     </figure>
-    <figure>
+    <figure class="is-landscape">
       <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile">
     </figure>
-    <figure>
+    <figure class="is-landscape">
       <img src="../images/WhatOnEarth.05.jpg" alt="Two drawings side by side: a dark curved form and a portrait">
     </figure>
     <figure>
@@ -83,4 +87,72 @@
 
   <div class="zl" id="zl" hidden>
     <button class="zl-close" id="zl-close" aria-label="Close">&times;</button>
-    <button class="zl-prev" id="zl-prev"
+    <button class="zl-prev" id="zl-prev" aria-label="Previous image">&#8249;</button>
+    <button class="zl-next" id="zl-next" aria-label="Next image">&#8250;</button>
+    <img id="zl-img" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var thumbs = document.querySelectorAll('main figure img');
+      var box = document.getElementById('zl');
+      var big = document.getElementById('zl-img');
+      var n = thumbs.length, idx = 0;
+
+      // Confirm orientation from the real image: wider than tall = landscape
+      function classify(img) {
+        var fig = img.parentNode;
+        fig.classList.toggle('is-landscape', img.naturalWidth > img.naturalHeight * 1.05);
+      }
+      for (var i = 0; i < n; i++) {
+        if (thumbs[i].complete && thumbs[i].naturalWidth) classify(thumbs[i]);
+        else thumbs[i].addEventListener('load', function () { classify(this); });
+      }
+
+      function load(k) {
+        idx = (k + n) % n;
+        big.src = thumbs[idx].src;
+        big.alt = thumbs[idx].alt;
+        box.classList.remove('zoomed');
+        big.style.width = '';
+        box.scrollTop = 0;
+        box.scrollLeft = 0;
+      }
+      function open(k) { load(k); box.hidden = false; document.body.style.overflow = 'hidden'; }
+      function close() { box.hidden = true; document.body.style.overflow = ''; }
+
+      for (var j = 0; j < n; j++) {
+        (function (k) { thumbs[k].addEventListener('click', function () { open(k); }); })(j);
+      }
+
+      big.addEventListener('click', function (e) {
+        if (box.classList.contains('zoomed')) {
+          box.classList.remove('zoomed');
+          big.style.width = '';
+          return;
+        }
+        var r = big.getBoundingClientRect();
+        var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+        var w = box.clientWidth * 2;
+        box.classList.add('zoomed');
+        big.style.width = w + 'px';
+        box.scrollLeft = fx * w - e.clientX;
+        box.scrollTop = fy * big.offsetHeight - e.clientY;
+      });
+
+      box.addEventListener('click', function (e) {
+        if (e.target === box && !box.classList.contains('zoomed')) close();
+      });
+      document.getElementById('zl-close').addEventListener('click', close);
+      document.getElementById('zl-prev').addEventListener('click', function () { load(idx - 1); });
+      document.getElementById('zl-next').addEventListener('click', function () { load(idx + 1); });
+      document.addEventListener('keydown', function (e) {
+        if (box.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') load(idx + 1);
+        if (e.key === 'ArrowLeft') load(idx - 1);
+      });
+    })();
+  </script>
+</body>
+</html>
