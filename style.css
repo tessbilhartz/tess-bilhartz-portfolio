@@ -52,6 +52,29 @@ figcaption { margin-top: 3px; }
 .exhibit img { display: block; width: 100%; height: auto; object-fit: cover; }
 .exhibit .caption { display: block; margin-top: 3px; }
 
+.gallery { display: flex; flex-direction: column; gap: 55px; }
+.gallery .intro { margin: 0 0 -36px; color: #444; }
+.gallery figure { margin: 0; position: relative; }
+.gallery figcaption { position: absolute; top: 100%; left: 0; margin-top: 3px; color: #333; white-space: nowrap; }
+
+.zoom { cursor: zoom-in; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.97);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 90px); object-fit: contain; }
+.lightbox-caption { margin: 10px 0 0; min-height: 17px; font-size: 13px; color: #333; }
+.lightbox-close { position: absolute; top: 12px; right: 18px; background: none; border: 0; font: inherit; font-size: 32px; line-height: 1; color: var(--text); cursor: pointer; }
+
 .site-footer { margin-top: 110px; border-top: 1px solid #888; padding: 12px max(16px, calc((100% - var(--column)) / 2 + 9px)) 24px; font-size: 12px; color: #333; }
 
 @media (max-width: 760px) {
@@ -65,7 +88,3 @@ figcaption { margin-top: 3px; }
   .site-header { flex-direction: column; align-items: flex-start; height: auto; padding: 16px 0 8px; gap: 12px; }
   .site-nav { width: 100%; margin-left: 0; font-size: 14px; }
 }
-
-.gallery .intro { margin: 0 0 19px; color: #444; }
-.gallery figure { margin: 0 0 55px; }
-.gallery figure.has-caption { margin-bottom: 35px; }
