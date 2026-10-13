@@ -13,9 +13,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <style>
-    main figure.single img { width: auto; max-width: 100%; max-height: 80vh; height: auto; }
-  main figure.wide img { aspect-ratio: auto; object-fit: fill; width: auto; max-width: 100%; max-height: 60vh; height: auto; }
-    main figure img { cursor: zoom-in; }
+    :root { --img-h: min(78vh, 700px); }
+main figure img { display: block; width: auto; height: auto; max-width: 100%; cursor: zoom-in; }
+main figure.single img { max-height: var(--img-h); }
+main figure.wide img { max-height: calc(var(--img-h) * 0.8); aspect-ratio: auto; object-fit: contain; }
     .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
     .zl[hidden] { display: none; }
     .zl img { display: block; flex: none; margin: auto; width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); cursor: zoom-in; }
