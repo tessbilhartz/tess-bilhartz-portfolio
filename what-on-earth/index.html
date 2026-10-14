@@ -18,6 +18,7 @@
     @media (max-width: 700px) {
       :root { --portrait-w: 100%; --landscape-w: 100%; }
     }
+
     /* Each figure is a centered box; the image fills it and the caption lines up with its left edge */
     main figure { width: var(--portrait-w); margin: 0 auto 40px; }
     main figure.is-landscape { width: var(--landscape-w); }
@@ -25,10 +26,12 @@
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: auto;
+      aspect-ratio: auto 4 / 5;      /* placeholder shape until the photo loads */
       object-fit: contain;
+      background: #f3f3f3;
       cursor: zoom-in;
     }
+    main figure.is-landscape img { aspect-ratio: auto 3 / 2; }
     /* Space between the opening text and the first image */
     main figure:first-child figcaption { margin: 0 0 var(--top-gap); }
 
@@ -58,32 +61,32 @@
   <main>
     <figure>
       <figcaption>Installation shots from <em>What On Earth</em> at Below Grand Gallery, October 2020</figcaption>
-      <img src="../images/WhatOnEarth.01.jpg" alt="Installation view of What On Earth, with drawings on the walls and two floor lamps">
+      <img src="../images/WhatOnEarth.01.jpg" alt="Installation view of What On Earth, with drawings on the walls and two floor lamps" fetchpriority="high">
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail">
+      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail" loading="lazy" decoding="async">
       <figcaption>Colored pencil on paper, 25 x 27 inches</figcaption>
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face">
+      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face" loading="lazy" decoding="async">
     </figure>
     <figure class="is-landscape">
-      <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile">
+      <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile" loading="lazy" decoding="async">
     </figure>
     <figure class="is-landscape">
-      <img src="../images/WhatOnEarth.05.jpg" alt="Two drawings side by side: a dark curved form and a portrait">
+      <img src="../images/WhatOnEarth.05.jpg" alt="Two drawings side by side: a dark curved form and a portrait" loading="lazy" decoding="async">
       <figcaption>Colored pencil on paper, 25 x 25 inches</figcaption>
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.06.jpg" alt="Colored pencil drawing of a seascape">
+      <img src="../images/WhatOnEarth.06.jpg" alt="Colored pencil drawing of a seascape" loading="lazy" decoding="async">
       <figcaption>Colored pencil on paper, 25 x 25 inches</figcaption>
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.07.jpg" alt="Colored pencil drawing of a face above a rocky shoreline">
+      <img src="../images/WhatOnEarth.07.jpg" alt="Colored pencil drawing of a face above a rocky shoreline" loading="lazy" decoding="async">
       <figcaption>Colored pencil on paper, 25 x 26 inches</figcaption>
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.08.jpg" alt="Exterior view of the installation in a storefront window">
+      <img src="../images/WhatOnEarth.08.jpg" alt="Exterior view of the installation in a storefront window" loading="lazy" decoding="async">
     </figure>
   </main>
 
@@ -102,16 +105,6 @@
       var box = document.getElementById('zl');
       var big = document.getElementById('zl-img');
       var n = thumbs.length, idx = 0;
-
-      // Confirm orientation from the real image: wider than tall = landscape
-      function classify(img) {
-        var fig = img.parentNode;
-        fig.classList.toggle('is-landscape', img.naturalWidth > img.naturalHeight * 1.05);
-      }
-      for (var i = 0; i < n; i++) {
-        if (thumbs[i].complete && thumbs[i].naturalWidth) classify(thumbs[i]);
-        else thumbs[i].addEventListener('load', function () { classify(this); });
-      }
 
       function load(k) {
         idx = (k + n) % n;
