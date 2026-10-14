@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <style>
-    /* Press grid: 3 columns. Every logo sits in the same-height box, aligned to the top-left,
-       so logos line up along the top and the captions line up underneath. */
-    :root { --logo-h: 130px; --col-gap: 56px; --row-gap: 64px; }
+    /* Press grid: 3 columns. Blank margins are trimmed off each logo (see script at the bottom),
+       then every logo sits in the same-height box, aligned to the top-left. */
+    :root { --logo-h: 110px; --col-gap: 56px; --row-gap: 64px; }
 
     .press-grid {
       display: grid;
@@ -27,7 +27,7 @@
 
     .press-logo {
       display: flex;
-      align-items: flex-start;   /* tops line up */
+      align-items: flex-start;   /* tops line up. Use flex-end to line up the bottoms instead */
       justify-content: flex-start;
       height: var(--logo-h);
     }
@@ -37,7 +37,9 @@
       height: auto;
       max-width: 100%;
       max-height: 100%;
+      visibility: hidden;        /* shown once trimmed, so nothing jumps around */
     }
+    .press-logo img.ready { visibility: visible; }
 
     .press-caption {
       display: block;
@@ -54,6 +56,7 @@
       .press-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <noscript><style>.press-logo img { visibility: visible; }</style></noscript>
 </head>
 <body>
   <header class="site-header">
@@ -108,5 +111,64 @@
   </main>
 
   <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
+
+  <script>
+    // Trim blank (white or transparent) margins off each logo so the visible artwork lines up.
+    (function () {
+      var imgs = document.querySelectorAll('.press-logo img');
+
+      function show(img) { img.classList.add('ready'); }
+
+      function trim(img) {
+        if (img.dataset.trimmed) { show(img); return; }
+        try {
+          var w = img.naturalWidth, h = img.naturalHeight;
+          if (!w || !h) { show(img); return; }
+
+          var c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          var ctx = c.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(img, 0, 0);
+          var d = ctx.getImageData(0, 0, w, h).data;
+
+          var minX = w, minY = h, maxX = -1, maxY = -1;
+          for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+              var p = (y * w + x) * 4;
+              // content = visible pixel that is not (near) white
+              if (d[p + 3] > 20 && (d[p] < 235 || d[p + 1] < 235 || d[p + 2] < 235)) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
+            }
+          }
+          if (maxX < 0) { show(img); return; }
+
+          var tw = maxX - minX + 1, th = maxY - minY + 1;
+          if (tw >= w - 1 && th >= h - 1) { show(img); return; }   // nothing to trim
+
+          var t = document.createElement('canvas');
+          t.width = tw; t.height = th;
+          t.getContext('2d').drawImage(c, minX, minY, tw, th, 0, 0, tw, th);
+
+          img.dataset.trimmed = '1';
+          img.addEventListener('load', function () { show(img); }, { once: true });
+          img.src = t.toDataURL('image/png');
+        } catch (e) {
+          show(img);   // if trimming isn't possible, just show the logo as is
+        }
+      }
+
+      imgs.forEach(function (img) {
+        if (img.complete && img.naturalWidth) trim(img);
+        else {
+          img.addEventListener('load', function () { trim(img); });
+          img.addEventListener('error', function () { show(img); });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
