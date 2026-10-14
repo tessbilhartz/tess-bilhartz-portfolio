@@ -19,7 +19,7 @@
       :root { --portrait-w: 100%; --landscape-w: 100%; }
     }
 
-    /* Each figure is a centered box; the image fills it and the caption lines up with its left edge */
+    /* Every portrait image is the same width; every landscape image is the same, wider width */
     main figure { width: var(--portrait-w); margin: 0 auto 40px; }
     main figure.is-landscape { width: var(--landscape-w); }
     main figure img {
@@ -64,11 +64,11 @@
       <img src="../images/WhatOnEarth.01.jpg" alt="Installation view of What On Earth, with drawings on the walls and two floor lamps" fetchpriority="high">
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail" loading="lazy" decoding="async">
+      <img src="../images/WhatOnEarth.02.jpg" alt="Installation view, floor detail">
       <figcaption>Colored pencil on paper, 25 x 27 inches</figcaption>
     </figure>
     <figure>
-      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face" loading="lazy" decoding="async">
+      <img src="../images/WhatOnEarth.03.jpg" alt="Colored pencil drawing, profile of a face">
     </figure>
     <figure class="is-landscape">
       <img src="../images/WhatOnEarth.04.jpg" alt="Two drawings side by side: a seascape and a profile" loading="lazy" decoding="async">
@@ -105,6 +105,16 @@
       var box = document.getElementById('zl');
       var big = document.getElementById('zl-img');
       var n = thumbs.length, idx = 0;
+
+      // Size each image by its real orientation: wider than tall = landscape, otherwise portrait
+      function classify(img) {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        img.parentNode.classList.toggle('is-landscape', img.naturalWidth > img.naturalHeight * 1.05);
+      }
+      for (var i = 0; i < n; i++) {
+        if (thumbs[i].complete) classify(thumbs[i]);
+        thumbs[i].addEventListener('load', function () { classify(this); });
+      }
 
       function load(k) {
         idx = (k + n) % n;
