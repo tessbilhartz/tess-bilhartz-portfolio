@@ -15,7 +15,9 @@
   <style>
     /* ONE place to control sizes: width as a share of the page column */
     :root { --portrait-w: 60%; --landscape-w: 80%; --top-gap: 40px; }
-
+    @media (max-width: 700px) {
+      :root { --portrait-w: 100%; --landscape-w: 100%; }
+    }
     /* Each figure is a centered box; the image fills it and the caption lines up with its left edge */
     main figure { width: var(--portrait-w); margin: 0 auto 40px; }
     main figure.is-landscape { width: var(--landscape-w); }
