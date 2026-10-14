@@ -11,8 +11,18 @@
   <style>
     .gallery figure { width: 52.5%; margin: 0 auto; }
     @media (max-width: 760px) { .gallery figure { width: 80%; } }
+
+    /* Zoom viewer */
+    .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
+    .zl[hidden] { display: none; }
+    .zl img { display: block; flex: none; margin: auto; width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); cursor: zoom-in; }
+    .zl.zoomed img { max-width: none; max-height: none; cursor: zoom-out; }
+    .zl button { position: fixed; z-index: 2001; background: none; border: 0; padding: 8px 14px; font-size: 34px; line-height: 1; color: #000; cursor: pointer; }
+    .zl-close { top: 8px; right: 12px; }
+    .zl-prev, .zl-next { top: 50%; transform: translateY(-50%); }
+    .zl-prev { left: 8px; }
+    .zl-next { right: 8px; }
   </style>
-  <script src="../gallery.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -28,7 +38,7 @@
   <main class="gallery">
     <p class="intro">Installation shots from <em>Waves</em>, a public installation at Main Window Dumbo, presented by Deanna Evans Projects, 2026</p>
 
-    <figure><img src="../images/Waves.01.jpg" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.01.jpg" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
 
     <figure><img class="zoom" src="../images/Waves.02.jpg" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
 
@@ -40,5 +50,65 @@
   </main>
 
   <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
+
+  <div class="zl" id="zl" hidden>
+    <button class="zl-close" id="zl-close" aria-label="Close">&times;</button>
+    <button class="zl-prev" id="zl-prev" aria-label="Previous image">&#8249;</button>
+    <button class="zl-next" id="zl-next" aria-label="Next image">&#8250;</button>
+    <img id="zl-img" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var thumbs = document.querySelectorAll('main figure img');
+      var box = document.getElementById('zl');
+      var big = document.getElementById('zl-img');
+      var n = thumbs.length, idx = 0;
+
+      function load(k) {
+        idx = (k + n) % n;
+        big.src = thumbs[idx].src;
+        big.alt = thumbs[idx].alt;
+        box.classList.remove('zoomed');
+        big.style.width = '';
+        box.scrollTop = 0;
+        box.scrollLeft = 0;
+      }
+      function open(k) { load(k); box.hidden = false; document.body.style.overflow = 'hidden'; }
+      function close() { box.hidden = true; document.body.style.overflow = ''; }
+
+      for (var j = 0; j < n; j++) {
+        (function (k) { thumbs[k].addEventListener('click', function () { open(k); }); })(j);
+      }
+
+      big.addEventListener('click', function (e) {
+        if (box.classList.contains('zoomed')) {
+          box.classList.remove('zoomed');
+          big.style.width = '';
+          return;
+        }
+        var r = big.getBoundingClientRect();
+        var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+        var w = box.clientWidth * 2;
+        box.classList.add('zoomed');
+        big.style.width = w + 'px';
+        box.scrollLeft = fx * w - e.clientX;
+        box.scrollTop = fy * big.offsetHeight - e.clientY;
+      });
+
+      box.addEventListener('click', function (e) {
+        if (e.target === box && !box.classList.contains('zoomed')) close();
+      });
+      document.getElementById('zl-close').addEventListener('click', close);
+      document.getElementById('zl-prev').addEventListener('click', function () { load(idx - 1); });
+      document.getElementById('zl-next').addEventListener('click', function () { load(idx + 1); });
+      document.addEventListener('keydown', function (e) {
+        if (box.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') load(idx + 1);
+        if (e.key === 'ArrowLeft') load(idx - 1);
+      });
+    })();
+  </script>
 </body>
 </html>
