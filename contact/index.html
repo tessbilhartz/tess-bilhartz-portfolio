@@ -15,12 +15,13 @@
     /* Contact: text on the left, image on the right */
     .contact-wrap {
       display: grid;
-      grid-template-columns: 41.7% 1fr;
+      grid-template-columns: 46% 1fr;
       align-items: center;
     }
     .contact-text { padding-right: 24px; }
-    .contact-text p { margin: 0 0 1.6em; font-size: 16px; line-height: 1.4; }
+    .contact-text p { margin: 0 0 1.6em; font-size: 14px; line-height: 1.4; }
     .contact-text p:last-child { margin-bottom: 0; }
+    .contact-text .intro { white-space: nowrap; }   /* keeps the first sentence on one line */
     .contact-text a { text-decoration: underline; text-underline-offset: 2px; }
     .contact-text a:hover { color: #777; }
     .contact-text a.plain { text-decoration: none; }
@@ -29,6 +30,7 @@
     @media (max-width: 700px) {
       .contact-wrap { grid-template-columns: 1fr; row-gap: 32px; }
       .contact-text { padding-right: 0; }
+      .contact-text .intro { white-space: normal; }
     }
   </style>
 </head>
@@ -46,7 +48,7 @@
   <main>
     <div class="contact-wrap">
       <div class="contact-text">
-        <p>Please reach out for studio visits and other inquiries.</p>
+        <p class="intro">Please reach out for studio visits and other inquiries.</p>
         <p><a class="plain" href="mailto:tess.bilhartz@gmail.com">tess.bilhartz@gmail.com</a></p>
         <p>instagram - <a href="https://www.instagram.com/tess_bilhartz/" target="_blank" rel="noopener">@tess_bilhartz</a></p>
         <p>represented by <a href="https://www.deannaevansprojects.com" target="_blank" rel="noopener">Deanna Evans Projects</a></p>
