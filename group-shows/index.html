@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Group Shows | Tess Bilhartz</title>
+  <meta property="og:title" content="Group Shows | Tess Bilhartz">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tessbilhartz.com/group-shows/">
+  <meta property="og:image" content="https://www.tessbilhartz.com/images/GroupShow.01.jpg">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ONE place to control sizes: width as a share of the page column */
+    :root { --portrait-w: 60%; --landscape-w: 80%; }
+
+    /* Each figure is a centered box; the image fills it and the caption lines up with its left edge */
+    main figure { width: var(--portrait-w); margin: 0 auto 40px; }
+    main figure.is-landscape { width: var(--landscape-w); }
+    main figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
+
+    /* Zoom viewer */
+    .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
+    .zl[hidden] { display: none; }
+    .zl img { display: block; flex: none; margin: auto; width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); cursor: zoom-in; }
+    .zl.zoomed img { max-width: none; max-height: none; cursor: zoom-out; }
+    .zl button { position: fixed; z-index: 2001; background: none; border: 0; padding: 8px 14px; font-size: 34px; line-height: 1; color: #000; cursor: pointer; }
+    .zl-close { top: 8px; right: 12px; }
+    .zl-prev, .zl-next { top: 50%; transform: translateY(-50%); }
+    .zl-prev { left: 8px; }
+    .zl-next { right: 8px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="../">Tess Bilhartz</a>
+    <nav class="site-nav">
+      <a href="../exhibitions/">Exhibitions</a>
+      <a href="../about-1/">Press</a>
+      <a href="../cv/">About</a>
+      <a href="../contact/">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <figure class="is-landscape">
+      <img src="../images/GroupShow.01.jpg" alt="Installation shot of Deanna Evans Projects' booth at NADA NY, 2026">
+      <figcaption>Installation shot of Deanna Evans Projects' booth at NADA NY, 2026, with work also by Ben Cowan and Danielle Mysliwiec</figcaption>
+    </figure>
+
+    <figure class="is-landscape">
+      <img src="../images/GroupShow.02.jpg" alt="Verge, 2026, oil on canvas">
+      <figcaption><em>Verge</em>, 2026, oil on canvas, 18 x 28 in.</figcaption>
+    </figure>
+
+    <figure class="is-landscape">
+      <img src="../images/GroupShow.03.jpg" alt="Transparent, 2026, oil on canvas">
+      <figcaption><em>Transparent</em>, 2026, oil on canvas, 18 x 28 in.</figcaption>
+    </figure>
+
+    <figure class="is-landscape">
+      <img src="../images/GroupShow.04.jpg" alt="Installation shot from Spring at Primary, Miami FL, 2023">
+      <figcaption>Installation shot from <em>Spring</em> at Primary, Miami FL, 2023<br>All three works are colored pencil on paper, 16x12 inches.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../images/GroupShow.05.jpg" alt="Twisted, 2023, colored pencil on paper">
+      <figcaption><em>Twisted</em>, 2023, colored pencil on paper, 16x12 in.</figcaption>
+    </figure>
+
+    <figure class="is-landscape">
+      <img src="../images/GroupShow.06.jpg" alt="Oil painting from Off-Kilter, a dark forest scene">
+      <figcaption>Oil on canvas, 24 x 36 inches, from <em>Off-Kilter</em><br>Presented by Deanna Evans Project at Halsey McKay Gallery, East Hampton, NY, 2025</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../images/GroupShow.07.jpg" alt="Detail">
+      <figcaption>Detail</figcaption>
+    </figure>
+  </main>
+
+  <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
+
+  <div class="zl" id="zl" hidden>
+    <button class="zl-close" id="zl-close" aria-label="Close">&times;</button>
+    <button class="zl-prev" id="zl-prev" aria-label="Previous image">&#8249;</button>
+    <button class="zl-next" id="zl-next" aria-label="Next image">&#8250;</button>
+    <img id="zl-img" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var thumbs = document.querySelectorAll('main figure img');
+      var box = document.getElementById('zl');
+      var big = document.getElementById('zl-img');
+      var n = thumbs.length, idx = 0;
+
+      // Confirm orientation from the real image: wider than tall = landscape
+      function classify(img) {
+        var fig = img.parentNode;
+        fig.classList.toggle('is-landscape', img.naturalWidth > img.naturalHeight * 1.05);
+      }
+      for (var i = 0; i < n; i++) {
+        if (thumbs[i].complete && thumbs[i].naturalWidth) classify(thumbs[i]);
+        else thumbs[i].addEventListener('load', function () { classify(this); });
+      }
+
+      function load(k) {
+        idx = (k + n) % n;
+        big.src = thumbs[idx].src;
+        big.alt = thumbs[idx].alt;
+        box.classList.remove('zoomed');
+        big.style.width = '';
+        box.scrollTop = 0;
+        box.scrollLeft = 0;
+      }
+      function open(k) { load(k); box.hidden = false; document.body.style.overflow = 'hidden'; }
+      function close() { box.hidden = true; document.body.style.overflow = ''; }
+
+      for (var j = 0; j < n; j++) {
+        (function (k) { thumbs[k].addEventListener('click', function () { open(k); }); })(j);
+      }
+
+      big.addEventListener('click', function (e) {
+        if (box.classList.contains('zoomed')) {
+          box.classList.remove('zoomed');
+          big.style.width = '';
+          return;
+        }
+        var r = big.getBoundingClientRect();
+        var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+        var w = box.clientWidth * 2;
+        box.classList.add('zoomed');
+        big.style.width = w + 'px';
+        box.scrollLeft = fx * w - e.clientX;
+        box.scrollTop = fy * big.offsetHeight - e.clientY;
+      });
+
+      box.addEventListener('click', function (e) {
+        if (e.target === box && !box.classList.contains('zoomed')) close();
+      });
+      document.getElementById('zl-close').addEventListener('click', close);
+      document.getElementById('zl-prev').addEventListener('click', function () { load(idx - 1); });
+      document.getElementById('zl-next').addEventListener('click', function () { load(idx + 1); });
+      document.addEventListener('keydown', function (e) {
+        if (box.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') load(idx + 1);
+        if (e.key === 'ArrowLeft') load(idx - 1);
+      });
+    })();
+  </script>
+</body>
+</html>
