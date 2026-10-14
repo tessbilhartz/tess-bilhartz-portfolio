@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Tess Bilhartz</title>
+  <meta property="og:title" content="Contact | Tess Bilhartz">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.tessbilhartz.com/contact/">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* Contact: text on the left, image on the right */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 41.7% 1fr;
+      align-items: center;
+    }
+    .contact-text { padding-right: 24px; }
+    .contact-text p { margin: 0 0 1.6em; font-size: 16px; line-height: 1.4; }
+    .contact-text p:last-child { margin-bottom: 0; }
+    .contact-text a { text-decoration: underline; text-underline-offset: 2px; }
+    .contact-text a:hover { color: #777; }
+    .contact-text a.plain { text-decoration: none; }
+    .contact-wrap img { display: block; width: 100%; height: auto; }
+
+    @media (max-width: 700px) {
+      .contact-wrap { grid-template-columns: 1fr; row-gap: 32px; }
+      .contact-text { padding-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="../">Tess Bilhartz</a>
+    <nav class="site-nav">
+      <a href="../exhibitions/">Exhibitions</a>
+      <a href="../press/">Press</a>
+      <a href="../cv/">About</a>
+      <a href="../contact/" aria-current="page">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="contact-wrap">
+      <div class="contact-text">
+        <p>Please reach out for studio visits and other inquiries.</p>
+        <p><a class="plain" href="mailto:tess.bilhartz@gmail.com">tess.bilhartz@gmail.com</a></p>
+        <p>instagram - <a href="https://www.instagram.com/tess_bilhartz/" target="_blank" rel="noopener">@tess_bilhartz</a></p>
+        <p>represented by <a href="https://www.deannaevansprojects.com" target="_blank" rel="noopener">Deanna Evans Projects</a></p>
+        <p><a class="plain" href="mailto:info@deannaevansprojects.com">info@deannaevansprojects.com</a></p>
+      </div>
+      <img src="../images/Contact.01.jpg" alt="Mixed-media drawing of a figure in a yellow-green garment lying on a rippled beach">
+    </div>
+  </main>
+
+  <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
+</body>
+</html>
