@@ -16,6 +16,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* Two-column grid. Every thumbnail sits in the same-shaped tile, so rows line up cleanly. */
+    :root {
+      --tile: 1 / 1;          /* tile shape: try 4 / 5 (taller) or 4 / 3 (wider) */
+      --fit: contain;         /* contain = whole artwork visible; cover = fills the tile, crops the edges */
+      --tile-bg: #f3f3f3;     /* tile background; use #fff to blend with the page */
+      --col-gap: 40px;
+      --row-gap: 44px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--col-gap);
+      row-gap: var(--row-gap);
+      align-items: start;
+    }
+    main .exhibit,
+    main .exhibit.portrait { margin: 0; }
+    main .exhibit a,
+    main .exhibit.portrait a { display: block; width: 100%; }
+    main .exhibit img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: var(--tile) !important;
+      object-fit: var(--fit);
+      background: var(--tile-bg);
+    }
+    main .exhibit .caption { display: block; margin-top: 8px; }
+
+    @media (max-width: 560px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -31,35 +66,35 @@
   <main>
     <div class="exhibit portrait">
       <a href="../waves/">
-        <img src="../images/Waves.install1.jpg" alt="Waves, 2026" style="aspect-ratio:580/754">
+        <img src="../images/Waves.install1.jpg" alt="Waves, 2026" fetchpriority="high">
         <span class="caption">Waves, 2026</span>
       </a>
     </div>
 
     <div class="exhibit">
       <a href="../now-you-see-me-2025/">
-        <img src="../images/NowYouSeeMe.01.jpg" alt="Now You See Me, 2025" style="aspect-ratio:3/2" loading="lazy" decoding="async">
+        <img src="../images/NowYouSeeMe.01.jpg" alt="Now You See Me, 2025">
         <span class="caption">Now You See Me, 2025</span>
       </a>
     </div>
 
     <div class="exhibit">
       <a href="../follow-me-down/">
-        <img src="../images/FollowMeDown.install1.jpg" alt="Follow Me Down, 2022" style="aspect-ratio:3/2" loading="lazy" decoding="async">
+        <img src="../images/FollowMeDown.install1.jpg" alt="Follow Me Down, 2022" loading="lazy" decoding="async">
         <span class="caption">Follow Me Down, 2022</span>
       </a>
     </div>
 
     <div class="exhibit portrait">
       <a href="../what-on-earth/">
-        <img src="../images/WhatOnEarth.install1.jpg" alt="What On Earth, 2020" style="aspect-ratio:594/785" loading="lazy" decoding="async">
+        <img src="../images/WhatOnEarth.install1.jpg" alt="What On Earth, 2020" loading="lazy" decoding="async">
         <span class="caption">What On Earth, 2020</span>
       </a>
     </div>
 
     <div class="exhibit">
       <a href="../group-shows/">
-        <img src="../images/SpringatPrimary.install1.jpg" alt="Group Shows" style="aspect-ratio:688/494" loading="lazy" decoding="async">
+        <img src="../images/SpringatPrimary.install1.jpg" alt="Group Shows" loading="lazy" decoding="async">
         <span class="caption">Group Shows</span>
       </a>
     </div>
