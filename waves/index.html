@@ -17,8 +17,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <style>
-    .gallery figure { width: 52.5%; margin: 0 auto; }
-    @media (max-width: 760px) { .gallery figure { width: 80%; } }
+    /* The intro text sits in the same centered column as the images and captions */
+    .gallery figure,
+    main.gallery .intro { width: 52.5%; margin-left: auto; margin-right: auto; }
+    .gallery figure { margin-top: 0; margin-bottom: 0; }
+    @media (max-width: 760px) {
+      .gallery figure,
+      main.gallery .intro { width: 80%; }
+    }
 
     /* Zoom viewer */
     .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
