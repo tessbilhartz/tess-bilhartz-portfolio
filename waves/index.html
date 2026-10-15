@@ -21,9 +21,15 @@
     .gallery figure,
     main.gallery .intro { width: 52.5%; margin-left: auto; margin-right: auto; }
     .gallery figure { margin-top: 0; margin-bottom: 0; }
+
+    /* Intro: two lines on desktop; on phones the line break disappears and a comma takes its place */
+    .mob-only { display: none; }
     @media (max-width: 760px) {
       .gallery figure,
       main.gallery .intro { width: 80%; }
+      main.gallery .intro { text-wrap: balance; }
+      .mob-only { display: inline; }
+      .desk-break { display: none; }
     }
 
     /* Let captions wrap onto a second line instead of running off the screen */
@@ -53,7 +59,7 @@
   </header>
 
   <main class="gallery">
-    <p class="intro"><em>Waves</em>, a public installation at Main Window Dumbo<br>presented by Deanna Evans Projects, 2026</p>
+    <p class="intro"><em>Waves</em>, a public installation at Main Window Dumbo<span class="mob-only">,</span><br class="desk-break"> presented by Deanna Evans Projects, 2026</p>
 
     <figure><img class="zoom" src="../images/Waves.01.jpg" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
 
