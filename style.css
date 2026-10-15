@@ -1,131 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Waves, 2026 | Tess Bilhartz</title>
-  <meta name="description" content="Waves, a 2026 public installation of shaped oil paintings by Tess Bilhartz at Main Window Dumbo, presented by Deanna Evans Projects.">
-  <link rel="canonical" href="https://www.tessbilhartz.com/waves/">
-  <meta property="og:title" content="Waves, 2026 | Tess Bilhartz">
-  <meta property="og:description" content="A public installation of shaped oil paintings at Main Window Dumbo, presented by Deanna Evans Projects.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.tessbilhartz.com/waves/">
-  <meta property="og:image" content="https://www.tessbilhartz.com/images/Waves.01.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="../style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-  <style>
-    /* The intro text sits in the same centered column as the images and captions */
-    .gallery figure,
-    main.gallery .intro { width: 52.5%; margin-left: auto; margin-right: auto; }
-    .gallery figure { margin-top: 0; margin-bottom: 0; }
-    @media (max-width: 760px) {
-      .gallery figure,
-      main.gallery .intro { width: 80%; }
-    }
+:root {
+  --text: #000;
+  --menu: #333;
+  --hover: #777;
+  --bg: #fff;
+  --column: 864px;
+  --font: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; /* stand-in for Alliance No. 2 */
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.3;
+}
+a { color: inherit; text-decoration: none; }
 
-    /* Let captions wrap onto a second line instead of running off the screen */
-    .gallery figcaption { white-space: normal; }
+.site-header {
+  width: min(var(--column), 100% - 32px);
+  margin: 22px auto 0;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wordmark { font-size: 24px; line-height: 1; white-space: nowrap; flex: none; }
+.site-nav {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  margin-left: clamp(24px, 12vw, 105px);
+  padding-right: 8px;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--menu);
+}
+.site-nav a { transition: color 0.4s ease 0s; }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--hover); }
 
-    /* Zoom viewer */
-    .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
-    .zl[hidden] { display: none; }
-    .zl img { display: block; flex: none; margin: auto; width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); cursor: zoom-in; }
-    .zl.zoomed img { max-width: none; max-height: none; cursor: zoom-out; }
-    .zl button { position: fixed; z-index: 2001; background: none; border: 0; padding: 8px 14px; font-size: 34px; line-height: 1; color: #000; cursor: pointer; }
-    .zl-close { top: 8px; right: 12px; }
-    .zl-prev, .zl-next { top: 50%; transform: translateY(-50%); }
-    .zl-prev { left: 8px; }
-    .zl-next { right: 8px; }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <a class="wordmark" href="../">Tess Bilhartz</a>
-    <nav class="site-nav">
-      <a href="../exhibitions/">Exhibitions</a>
-      <a href="../press/">Press</a>
-      <a href="../cv/">About</a>
-      <a href="../contact/">Contact</a>
-    </nav>
-  </header>
+main { width: min(var(--column), 100% - 32px); margin: 53px auto 0; }
+figure { margin: 0 0 40px; }
+figure img { display: block; width: 100%; height: auto; }
+figure.wide img { aspect-ratio: 960 / 660; object-fit: cover; }
+figcaption { margin-top: 3px; }
 
-  <main class="gallery">
-    <p class="intro"><em>Waves</em>, a public installation at Main Window Dumbo, presented by Deanna Evans Projects, 2026</p>
+.exhibit { margin: 0 0 40px; }
+.exhibit a { display: block; width: 40%; }
+.exhibit.portrait a { width: 34.4%; }
+.exhibit img { display: block; width: 100%; height: auto; object-fit: cover; }
+.exhibit .caption { display: block; margin-top: 3px; }
 
-    <figure><img class="zoom" src="../images/Waves.01.jpg" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
+.gallery { display: flex; flex-direction: column; gap: 55px; }
+.gallery .intro { margin: 0 0 -36px; color: #444; }
+.gallery figure { margin: 0; position: relative; }
+.gallery figcaption { position: absolute; top: 100%; left: 0; margin-top: 3px; color: #333; white-space: nowrap; }
 
-    <figure><img class="zoom" src="../images/Waves.02.jpg" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
+.zoom { cursor: zoom-in; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.97);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 90px); object-fit: contain; }
+.lightbox-caption { margin: 10px 0 0; min-height: 17px; font-size: 13px; color: #333; }
+.lightbox-close { position: absolute; top: 12px; right: 18px; background: none; border: 0; font: inherit; font-size: 32px; line-height: 1; color: var(--text); cursor: pointer; }
 
-    <figure><img class="zoom" src="../images/Waves.03.jpg" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
+.site-footer { margin-top: 110px; border-top: 1px solid #888; padding: 12px max(16px, calc((100% - var(--column)) / 2 + 9px)) 24px; font-size: 12px; color: #333; }
 
-    <figure><img class="zoom" src="../images/Waves.04.jpg" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
-
-    <figure><img class="zoom" src="../images/Waves.05.jpg" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
-  </main>
-
-  <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
-
-  <div class="zl" id="zl" hidden>
-    <button class="zl-close" id="zl-close" aria-label="Close">&times;</button>
-    <button class="zl-prev" id="zl-prev" aria-label="Previous image">&#8249;</button>
-    <button class="zl-next" id="zl-next" aria-label="Next image">&#8250;</button>
-    <img id="zl-img" alt="">
-  </div>
-
-  <script>
-    (function () {
-      var thumbs = document.querySelectorAll('main figure img');
-      var box = document.getElementById('zl');
-      var big = document.getElementById('zl-img');
-      var n = thumbs.length, idx = 0;
-
-      function load(k) {
-        idx = (k + n) % n;
-        big.src = thumbs[idx].src;
-        big.alt = thumbs[idx].alt;
-        box.classList.remove('zoomed');
-        big.style.width = '';
-        box.scrollTop = 0;
-        box.scrollLeft = 0;
-      }
-      function open(k) { load(k); box.hidden = false; document.body.style.overflow = 'hidden'; }
-      function close() { box.hidden = true; document.body.style.overflow = ''; }
-
-      for (var j = 0; j < n; j++) {
-        (function (k) { thumbs[k].addEventListener('click', function () { open(k); }); })(j);
-      }
-
-      big.addEventListener('click', function (e) {
-        if (box.classList.contains('zoomed')) {
-          box.classList.remove('zoomed');
-          big.style.width = '';
-          return;
-        }
-        var r = big.getBoundingClientRect();
-        var fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
-        var w = box.clientWidth * 2;
-        box.classList.add('zoomed');
-        big.style.width = w + 'px';
-        box.scrollLeft = fx * w - e.clientX;
-        box.scrollTop = fy * big.offsetHeight - e.clientY;
-      });
-
-      box.addEventListener('click', function (e) {
-        if (e.target === box && !box.classList.contains('zoomed')) close();
-      });
-      document.getElementById('zl-close').addEventListener('click', close);
-      document.getElementById('zl-prev').addEventListener('click', function () { load(idx - 1); });
-      document.getElementById('zl-next').addEventListener('click', function () { load(idx + 1); });
-      document.addEventListener('keydown', function (e) {
-        if (box.hidden) return;
-        if (e.key === 'Escape') close();
-        if (e.key === 'ArrowRight') load(idx + 1);
-        if (e.key === 'ArrowLeft') load(idx - 1);
-      });
-    })();
-  </script>
-</body>
-</html>
+@media (max-width: 760px) {
+  .wordmark { font-size: 20px; }
+  .site-nav { font-size: 13px; letter-spacing: 0.02em; margin-left: 16px; padding-right: 0; }
+  main { margin-top: 32px; }
+  .exhibit a { width: 70%; }
+  .exhibit.portrait a { width: 60%; }
+}
+@media (max-width: 480px) {
+  .site-header { flex-direction: column; align-items: flex-start; height: auto; padding: 16px 0 8px; gap: 12px; }
+  .site-nav { width: 100%; margin-left: 0; font-size: 14px; }
+}
