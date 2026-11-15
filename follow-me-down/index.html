@@ -25,11 +25,15 @@
   <meta property="og:url" content="https://www.tessbilhartz.com/follow-me-down/">
   <meta property="og:image" content="https://www.tessbilhartz.com/images/FollowMeDown.01.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="../images/FollowMeDown.01.jpg" fetchpriority="high">
   <link rel="stylesheet" href="../style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <style>
+    /* Images fill their column; width/height attributes reserve the space before they load */
+    .gallery figure img { width: 100%; height: auto; }
+
     /* Zoom viewer */
     .zl { position: fixed; inset: 0; z-index: 2000; display: flex; overflow: auto; background: rgba(255,255,255,.98); }
     .zl[hidden] { display: none; }
@@ -56,23 +60,23 @@
   <main class="gallery">
     <p class="intro">Installation shots and work from <em>Follow Me Down</em> at Rubber Factory, 2022</p>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.01.jpg" alt="Installation view of Follow Me Down at Rubber Factory, 2022" fetchpriority="high"></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.01.jpg" width="2000" height="1333" alt="Installation view of Follow Me Down at Rubber Factory, 2022" fetchpriority="high"></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.02.jpg" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 27 x 40 in.</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.02.jpg" width="2000" height="1387" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 27 x 40 in.</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.03.jpg" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 27 x 40 in.</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.03.jpg" width="1901" height="1324" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 27 x 40 in.</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.04.jpg" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 24 x 30 in.</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.04.jpg" width="2000" height="1333" alt="Lens-shaped drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 24 x 30 in.</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.05.jpg" alt="Detail of drawing" loading="lazy" decoding="async"><figcaption>Detail</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.05.jpg" width="2000" height="1373" alt="Detail of drawing" loading="lazy" decoding="async"><figcaption>Detail</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.06.jpg" alt="Installation view of Follow Me Down at Rubber Factory, 2022" loading="lazy" decoding="async"></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.06.jpg" width="2000" height="1317" alt="Installation view of Follow Me Down at Rubber Factory, 2022" loading="lazy" decoding="async"></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.07.jpg" alt="Large wave drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 52 x 108 in.</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.07.jpg" width="2000" height="959" alt="Large wave drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 52 x 108 in.</figcaption></figure>
 
-    <figure style="width:52.5%; margin:0 auto;"><img class="zoom" src="../images/FollowMeDown.08.jpg" alt="Detail of drawing" loading="lazy" decoding="async"><figcaption>Detail</figcaption></figure>
+    <figure style="width:52.5%; margin:0 auto;"><img class="zoom" src="../images/FollowMeDown.08.jpg" width="2000" height="2647" alt="Detail of drawing" loading="lazy" decoding="async"><figcaption>Detail</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/FollowMeDown.09.jpg" alt="Arched drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 30 x 32 in.</figcaption></figure>
+    <figure><img class="zoom" src="../images/FollowMeDown.09.jpg" width="1836" height="1721" alt="Arched drawing, colored pencil on paper" loading="lazy" decoding="async"><figcaption>Colored pencil on paper, 30 x 32 in.</figcaption></figure>
   </main>
 
   <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
