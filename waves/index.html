@@ -25,6 +25,7 @@
   <meta property="og:url" content="https://www.tessbilhartz.com/waves/">
   <meta property="og:image" content="https://www.tessbilhartz.com/images/Waves.01.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="../images/Waves.01.jpg" fetchpriority="high">
   <link rel="stylesheet" href="../style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +35,9 @@
     .gallery figure,
     main.gallery .intro { width: 52.5%; margin-left: auto; margin-right: auto; }
     .gallery figure { margin-top: 0; margin-bottom: 0; }
+
+    /* Images fill their column; width/height attributes reserve the space before they load */
+    .gallery figure img { width: 100%; height: auto; }
 
     /* Intro: two lines on desktop; on phones the line break disappears and a comma takes its place */
     .mob-only { display: none; }
@@ -74,15 +78,15 @@
   <main class="gallery">
     <p class="intro"><em>Waves</em>, a public installation at Main Window Dumbo<span class="mob-only">,</span><br class="desk-break"> presented by Deanna Evans Projects, 2026</p>
 
-    <figure><img class="zoom" src="../images/Waves.01.jpg" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.01.jpg" width="2000" height="3000" alt="Waves at Main Window Dumbo, 2026" fetchpriority="high"><figcaption>Shaped canvas paintings are oil on canvas; window is 12 ft x 10 ft</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/Waves.02.jpg" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.02.jpg" width="2000" height="3000" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/Waves.03.jpg" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.03.jpg" width="2000" height="3000" alt="Detail from top panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from top panel, oil on canvas</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/Waves.04.jpg" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.04.jpg" width="2000" height="3000" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
 
-    <figure><img class="zoom" src="../images/Waves.05.jpg" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
+    <figure><img class="zoom" src="../images/Waves.05.jpg" width="2000" height="3000" alt="Detail from bottom panel, oil on canvas" loading="lazy" decoding="async"><figcaption>Detail from bottom panel, oil on canvas</figcaption></figure>
   </main>
 
   <footer class="site-footer">© Copyright 2026 Tess Bilhartz. All rights reserved.</footer>
